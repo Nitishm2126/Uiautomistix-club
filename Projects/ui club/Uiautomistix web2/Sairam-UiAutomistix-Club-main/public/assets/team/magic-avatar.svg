@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#111111"/>
+  <!-- Subtle radial glow -->
+  <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+    <stop offset="0%" stop-color="#F64124" stop-opacity="0.08"/>
+    <stop offset="100%" stop-color="#F64124" stop-opacity="0"/>
+  </radialGradient>
+  <rect width="200" height="200" fill="url(#glow)"/>
+  <!-- Head circle -->
+  <circle cx="100" cy="78" r="34" fill="rgba(246,65,36,0.10)" stroke="rgba(246,65,36,0.30)" stroke-width="1.5"/>
+  <!-- Person icon — head inner -->
+  <circle cx="100" cy="76" r="20" fill="rgba(246,65,36,0.18)"/>
+  <!-- Shoulders / body arc -->
+  <path d="M30 190 Q30 148 100 148 Q170 148 170 190" fill="rgba(246,65,36,0.08)" stroke="rgba(246,65,36,0.20)" stroke-width="1.5"/>
+  <!-- Label -->
+  <text x="100" y="210" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.18)" letter-spacing="2">MAGIC</text>
+  <!-- Temp badge -->
+  <rect x="60" y="158" width="80" height="14" rx="7" fill="rgba(246,65,36,0.08)" stroke="rgba(246,65,36,0.20)" stroke-width="0.75"/>
+  <text x="100" y="169" text-anchor="middle" font-family="Inter, sans-serif" font-size="7.5" fill="rgba(246,65,36,0.60)" letter-spacing="1.5">TEMPORARY</text>
+</svg>

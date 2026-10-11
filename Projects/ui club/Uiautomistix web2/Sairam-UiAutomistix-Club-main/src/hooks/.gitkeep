@@ -1,0 +1,3 @@
+# src/hooks/
+# Custom React hooks (useScrollPosition, useInView, useSupabase, etc.)
+# Will be populated in Phase 2+
