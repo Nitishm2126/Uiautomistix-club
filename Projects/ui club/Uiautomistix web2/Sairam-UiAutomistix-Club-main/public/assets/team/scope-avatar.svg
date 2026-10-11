@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#111111"/>
+  <!-- Subtle radial glow -->
+  <radialGradient id="glow2" cx="50%" cy="40%" r="50%">
+    <stop offset="0%" stop-color="#F64124" stop-opacity="0.06"/>
+    <stop offset="100%" stop-color="#F64124" stop-opacity="0"/>
+  </radialGradient>
+  <rect width="200" height="200" fill="url(#glow2)"/>
+  <!-- Question mark circle (placeholder indicator) -->
+  <circle cx="100" cy="78" r="34" fill="rgba(246,65,36,0.06)" stroke="rgba(246,65,36,0.20)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <!-- Question mark icon -->
+  <text x="100" y="90" text-anchor="middle" font-family="Inter, sans-serif" font-size="36" fill="rgba(246,65,36,0.35)" font-weight="700">?</text>
+  <!-- Shoulders / body arc -->
+  <path d="M30 190 Q30 148 100 148 Q170 148 170 190" fill="rgba(246,65,36,0.04)" stroke="rgba(246,65,36,0.14)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <!-- Temp badge -->
+  <rect x="45" y="156" width="110" height="14" rx="7" fill="rgba(246,65,36,0.06)" stroke="rgba(246,65,36,0.16)" stroke-width="0.75" stroke-dasharray="3 2"/>
+  <text x="100" y="167" text-anchor="middle" font-family="Inter, sans-serif" font-size="7" fill="rgba(246,65,36,0.45)" letter-spacing="1.5">TO BE PROVIDED</text>
+  <!-- SCOPE label -->
+  <text x="100" y="185" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.18)" letter-spacing="2">SCOPE</text>
+</svg>
