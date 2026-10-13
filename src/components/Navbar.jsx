@@ -156,6 +156,7 @@ function MobileNavLink({ link, isActive, index, onClose }) {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -12 }}
       transition={{ delay: index * 0.045, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      style={{ width: '100%' }}
     >
       <a
         href={link.href}
@@ -165,18 +166,23 @@ function MobileNavLink({ link, isActive, index, onClose }) {
           // Small delay so menu closes first, then scrolls
           setTimeout(() => scrollToSection(link.href), 180)
         }}
-        className="flex items-center gap-3 w-full px-4 py-3.5 rounded-xl focus-ring"
+        className="focus-ring"
         aria-current={isActive ? 'page' : undefined}
         style={{
+          display: 'block',
+          width: '100%',
           fontFamily: 'Inter, sans-serif',
           fontSize: '1rem',
           fontWeight: isActive ? 600 : 500,
-          color: isActive ? '#F64124' : '#FFFFFF',
+          color: isActive ? '#F64124' : 'rgba(255, 255, 255, 0.9)',
           background: isActive ? 'rgba(246, 65, 36, 0.1)' : 'transparent',
           borderLeft: isActive ? '3px solid #F64124' : '3px solid transparent',
+          borderRadius: '0.625rem',
+          padding: '0.75rem 1rem',
           transition: 'background 200ms ease, color 200ms ease',
           textDecoration: 'none',
           letterSpacing: '0.01em',
+          boxSizing: 'border-box',
         }}
       >
         {link.label}
@@ -212,12 +218,17 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── NAVBAR BAR ──────────────────────────────────────────── */}
+      {/*
+        ── NAVBAR BAR ──────────────────────────────────────────────
+        z-index: 1001 — highest layer, always sits above the menu panel
+        and the backdrop so the hamburger / X button is always clickable.
+      */}
       <motion.nav
         role="navigation"
         aria-label="Main navigation"
-        className="fixed top-0 left-0 right-0 z-[1000] w-full"
+        className="fixed top-0 left-0 right-0 w-full"
         style={{
+          zIndex: 1001,
           background: navbarBg,
           backdropFilter: navbarBackdrop,
           WebkitBackdropFilter: navbarBackdrop,
@@ -232,7 +243,7 @@ export default function Navbar() {
       >
         <div
           className="w-full mx-auto flex items-center justify-between"
-          style={{ maxWidth: '1280px', padding: '0 1.5rem', height: '68px' }}
+          style={{ maxWidth: '1280px', padding: '0 1.25rem', height: '68px' }}
         >
           {/* Logo */}
           <Logo />
@@ -257,6 +268,7 @@ export default function Navbar() {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             style={{
+              flexShrink: 0,
               background: menuOpen
                 ? 'rgba(246, 65, 36, 0.12)'
                 : scrolled
@@ -278,6 +290,7 @@ export default function Navbar() {
                   animate={{ rotate: 0, opacity: 1 }}
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
                   <X size={20} strokeWidth={2} color="#FFFFFF" />
                 </motion.span>
@@ -288,6 +301,7 @@ export default function Navbar() {
                   animate={{ rotate: 0, opacity: 1 }}
                   exit={{ rotate: -90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
                   <Menu size={20} strokeWidth={2} color="#FFFFFF" />
                 </motion.span>
@@ -301,11 +315,22 @@ export default function Navbar() {
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* Backdrop overlay */}
+            {/*
+              Backdrop overlay.
+              top: 68px — starts BELOW the navbar so the nav bar and hamburger
+              button are never covered and always remain clickable.
+              z-index: 998 — below the menu panel (1000) and navbar (1001).
+            */}
             <motion.div
               key="mobile-backdrop"
-              className="fixed inset-0 z-[999] lg:hidden"
-              style={{ background: 'rgba(10, 10, 10, 0.6)', backdropFilter: 'blur(4px)' }}
+              className="fixed left-0 right-0 bottom-0 lg:hidden"
+              style={{
+                top: '68px',
+                zIndex: 998,
+                background: 'rgba(10, 10, 10, 0.65)',
+                backdropFilter: 'blur(4px)',
+                WebkitBackdropFilter: 'blur(4px)',
+              }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -314,20 +339,32 @@ export default function Navbar() {
               aria-hidden="true"
             />
 
-            {/* Menu panel */}
+            {/*
+              Menu panel.
+              top: 68px — placed directly under the navbar with no gap.
+              z-index: 1000 — above backdrop (998) but below navbar bar (1001).
+              marginLeft/Right: 12px — breathing room on all widths (320 px+).
+              maxHeight + overflowY: auto — scrollable on very short viewports.
+            */}
             <motion.div
               id="mobile-menu"
               key="mobile-menu"
               role="menu"
-              className="fixed top-[68px] left-0 right-0 z-[1000] lg:hidden mx-3"
+              className="fixed left-0 right-0 lg:hidden"
               style={{
+                top: '68px',
+                zIndex: 1000,
+                marginLeft: '12px',
+                marginRight: '12px',
                 background: 'rgba(14, 14, 14, 0.97)',
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
                 border: '1px solid rgba(246, 65, 36, 0.15)',
                 borderRadius: '1rem',
-                boxShadow: '0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04)',
-                overflow: 'hidden',
+                boxShadow: '0 8px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.04)',
+                maxHeight: 'calc(100dvh - 88px)',
+                overflowY: 'auto',
+                overflowX: 'hidden',
               }}
               initial={{ opacity: 0, y: -12, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -336,14 +373,24 @@ export default function Navbar() {
             >
               {/* Top accent bar */}
               <div
+                aria-hidden="true"
                 style={{
                   height: '2px',
                   background: 'linear-gradient(90deg, #F64124, rgba(246,65,36,0.2))',
+                  flexShrink: 0,
                 }}
               />
 
-              {/* Nav links */}
-              <div className="p-3" role="none">
+              {/* Nav links — 8px container padding, 2px gap between items */}
+              <div
+                role="none"
+                style={{
+                  padding: '8px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '2px',
+                }}
+              >
                 {NAV_LINKS.map((link, i) => (
                   <MobileNavLink
                     key={link.href}
@@ -357,8 +404,14 @@ export default function Navbar() {
 
               {/* Bottom club name strip */}
               <div
-                className="flex items-center justify-between px-5 py-3"
-                style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  borderTop: '1px solid rgba(255,255,255,0.06)',
+                  padding: '10px 20px',
+                  flexShrink: 0,
+                }}
               >
                 <span
                   style={{
@@ -373,8 +426,16 @@ export default function Navbar() {
                   Sairam UiAutomistix Club
                 </span>
                 <div
-                  className="flex items-center justify-center w-6 h-6 rounded-md"
-                  style={{ background: '#F64124' }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '6px',
+                    background: '#F64124',
+                    flexShrink: 0,
+                  }}
                   aria-hidden="true"
                 >
                   <Cpu size={13} color="#fff" strokeWidth={2} />
