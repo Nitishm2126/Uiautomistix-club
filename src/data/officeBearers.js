@@ -21,7 +21,7 @@ export const officeBearers = [
     designation: "Vice President",
     imageUrl: "/assets/team/office-bearers/ramani.jpg",
     linkedin: "https://www.linkedin.com/in/ramani-s-149579282",
-    photoPosition: "center 20%",
+    photoPosition: "center 55%",
   },
   {
     id: "ob-3",
