@@ -45,6 +45,7 @@ export const magicExisting = [
     year: "III Year",
     department: "IT",
     imageUrl: "/assets/team/magic/divyashree.jpg",
+    linkedin: "https://www.linkedin.com/in/divyasree-dhanasankar-a72a41329?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   },
   {
     id: "me-2",
@@ -53,6 +54,7 @@ export const magicExisting = [
     year: "III Year",
     department: "CSE",
     imageUrl: "/assets/team/magic/rakshana%20devi.jpg",
+    linkedin: "https://www.linkedin.com/in/rakshanadevi",
   },
   {
     id: "me-3",
