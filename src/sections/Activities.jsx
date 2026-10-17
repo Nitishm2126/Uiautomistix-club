@@ -28,6 +28,9 @@ const getIconForActivity = (title) => {
   if (lowerTitle.includes('verse')) return Sparkles
   if (lowerTitle.includes('pitch')) return Cpu
   if (lowerTitle.includes('automata')) return Rocket
+  if (lowerTitle.includes('global') || lowerTitle.includes('stage') || lowerTitle.includes('champion')) return Award
+  if (lowerTitle.includes('inauguration') || lowerTitle.includes('launchpad')) return Rocket
+  if (lowerTitle.includes('ctrl') || lowerTitle.includes('agent')) return Cpu
   return Play
 }
 
@@ -35,7 +38,8 @@ const getIconForActivity = (title) => {
    EVENT DETAIL DATA FOR POPUP
    ============================================================ */
 const EVENT_DETAILS = {
-  "SAIRAM AUTOMATA \u2013 FUTURE IN AUTOMATION": {
+  "SAIRAM AUTOMATA – FUTURE IN AUTOMATION": {
+    title: "SAIRAM AUTOMATA \u2013 FUTURE IN AUTOMATION",
     posterUrl: "/assets/events/event%202026-1.jpg",
     date: "22/08/2026",
     description: [
@@ -55,14 +59,106 @@ const EVENT_DETAILS = {
       { text: "." },
     ],
   },
+  "CLUB INAUGURATION & LAUNCHPAD": {
+    title: "CLUB INAUGURATION & LAUNCHPAD",
+    posterUrl: "/assets/events/club-inauguration-launchpad.jpg",
+    date: "07/10/2026",
+    venue: "SSR Hall, Sri Sairam Engineering College",
+    description: [
+      { text: "The " },
+      { text: "Sairam UiAutomistix Club", bold: true },
+      { text: " proudly inaugurated its journey with the " },
+      { text: "Club Inauguration & Launchpad", bold: true },
+      { text: ", marking a new chapter in " },
+      { text: "learning, innovation, and automation", bold: true },
+      { text: " at " },
+      { text: "Sri Sairam Engineering College", bold: true },
+      { text: "." },
+      { text: "\n\n" },
+      { text: "The event officially launched the club and introduced students to the exciting world of " },
+      { text: "Artificial Intelligence and Robotic Process Automation", bold: true },
+      { text: ". As part of the Launchpad initiative, a hands-on workshop titled " },
+      { text: "\u201CYour First AI Agent\u201D", bold: true },
+      { text: " was conducted to introduce students to " },
+      { text: "Agentic AI", bold: true },
+      { text: " and demonstrate how intelligent agents can automate tasks and solve real-world problems." },
+      { text: "\n\n" },
+      { text: "The initiative encouraged students to " },
+      { text: "explore emerging technologies, develop practical skills, and begin their journey towards building innovative AI-powered solutions", bold: true },
+      { text: "." },
+    ],
+  },
+  "CTRL + AI 1.0 — UNLEASH YOUR AGENTS": {
+    title: "CTRL + AI 1.0 \u2014 UNLEASH YOUR AGENTS",
+    posterUrl: "/assets/events/ctrl-ai-unleash-your-agents.jpg",
+    date: "09/10/2026",
+    venue: "Alpha Hall, Sri Sairam Engineering College",
+    description: [
+      { text: "The " },
+      { text: "Sairam UiAutomistix Club", bold: true },
+      { text: " organized " },
+      { text: "CTRL + AI 1.0 \u2014 Unleash Your Agents", bold: true },
+      { text: ", an intensive " },
+      { text: "six-hour Agentic AI challenge", bold: true },
+      { text: " designed to encourage innovation, creativity, and hands-on learning among students." },
+      { text: "\n\n" },
+      { text: "Held on " },
+      { text: "9 October 2026 at Alpha Hall, Sri Sairam Engineering College", bold: true },
+      { text: ", the event provided participants with an opportunity to explore the power of " },
+      { text: "Artificial Intelligence", bold: true },
+      { text: " and develop " },
+      { text: "intelligent AI agents through practical challenges", bold: true },
+      { text: "." },
+      { text: "\n\n" },
+      { text: "The six-hour challenge encouraged students to apply their technical knowledge, experiment with AI-driven solutions, strengthen their problem-solving abilities, and gain practical exposure to the emerging field of " },
+      { text: "Agentic AI", bold: true },
+      { text: "." },
+      { text: "\n\n" },
+      { text: "The event fostered collaboration, technical exploration, and innovation, inspiring students to move beyond traditional AI applications and discover the potential of " },
+      { text: "autonomous intelligent agents", bold: true },
+      { text: "." },
+    ],
+  },
+  "5th Consecutive Year on the Global Stage!": {
+    title: "5th Consecutive Year on the Global Stage!",
+    posterUrl: "/assets/events/global-stage-champions.jpg",
+    date: "Academic Year 2026 - 2027",
+    description: [
+      { text: "Our " },
+      { text: "Student Developer Champions", bold: true },
+      { text: " continue to shine on the global stage through the " },
+      { text: "UiPath Community", bold: true },
+      { text: ", showcasing excellence in " },
+      { text: "automation, innovation, and technology", bold: true },
+      { text: " for the " },
+      { text: "fifth consecutive year", bold: true },
+      { text: "." },
+    ],
+  },
+}
+
+// Resilient key lookup for event details
+const normalizeKey = (str) =>
+  (str || '')
+    .toLowerCase()
+    .replace(/[—–-]/g, '-')
+    .replace(/[^a-z0-9]/g, '')
+
+const getEventDetail = (title) => {
+  if (!title) return null
+  if (EVENT_DETAILS[title]) return EVENT_DETAILS[title]
+  const target = normalizeKey(title)
+  for (const [key, val] of Object.entries(EVENT_DETAILS)) {
+    if (normalizeKey(key) === target) return val
+  }
+  return null
 }
 
 /* ============================================================
    EVENT POPUP MODAL COMPONENT
    ============================================================ */
 function EventPopup({ activity, onClose }) {
-  const detail = EVENT_DETAILS[activity.title]
-  if (!detail) return null
+  const detail = getEventDetail(activity?.title)
 
   // Close on Escape key
   const handleKeyDown = useCallback((e) => {
@@ -70,6 +166,7 @@ function EventPopup({ activity, onClose }) {
   }, [onClose])
 
   useEffect(() => {
+    if (!detail) return
     document.addEventListener('keydown', handleKeyDown)
     // Prevent background scrolling
     document.body.style.overflow = 'hidden'
@@ -77,7 +174,9 @@ function EventPopup({ activity, onClose }) {
       document.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = ''
     }
-  }, [handleKeyDown])
+  }, [handleKeyDown, detail])
+
+  if (!detail) return null
 
   return (
     <motion.div
@@ -169,31 +268,55 @@ function EventPopup({ activity, onClose }) {
               marginBottom: '1rem',
             }}
           >
-            {activity.title}
+            {detail.title || activity.title}
           </h3>
 
-          {/* Date Badge */}
-          <div
-            className="inline-flex items-center gap-2"
-            style={{
-              padding: '0.4rem 0.85rem',
-              borderRadius: '8px',
-              background: 'rgba(246,65,36,0.1)',
-              border: '1px solid rgba(246,65,36,0.2)',
-              marginBottom: '1.25rem',
-            }}
-          >
-            <Calendar size={14} color="#F64124" strokeWidth={2} />
-            <span
-              style={{
-                fontFamily: 'Space Grotesk, Inter, sans-serif',
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                color: '#F64124',
-              }}
-            >
-              {detail.date}
-            </span>
+          {/* Badges */}
+          <div className="flex flex-wrap items-center gap-2" style={{ marginBottom: '1.25rem' }}>
+            {detail.date && (
+              <div
+                className="inline-flex items-center gap-2"
+                style={{
+                  padding: '0.4rem 0.85rem',
+                  borderRadius: '8px',
+                  background: 'rgba(246,65,36,0.1)',
+                  border: '1px solid rgba(246,65,36,0.2)',
+                }}
+              >
+                <Calendar size={14} color="#F64124" strokeWidth={2} />
+                <span
+                  style={{
+                    fontFamily: 'Space Grotesk, Inter, sans-serif',
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                    color: '#F64124',
+                  }}
+                >
+                  {detail.date}
+                </span>
+              </div>
+            )}
+            {detail.venue && (
+              <div
+                className="inline-flex items-center gap-2"
+                style={{
+                  padding: '0.4rem 0.85rem',
+                  borderRadius: '8px',
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '0.82rem',
+                    color: 'rgba(255,255,255,0.85)',
+                  }}
+                >
+                  📍 {detail.venue}
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Description */}
@@ -249,7 +372,7 @@ export default function ActivitiesSection() {
   const [selectedActivity, setSelectedActivity] = useState(null)
 
   // Check if an activity has popup detail
-  const hasDetail = (title) => Boolean(EVENT_DETAILS[title])
+  const hasDetail = (title) => Boolean(getEventDetail(title))
 
   return (
     <section
@@ -479,12 +602,12 @@ export default function ActivitiesSection() {
                             {/* Click hint for clickable cards */}
                             {clickable && (
                               <div
-                                className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                className="flex-shrink-0 opacity-70 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                 style={{
                                   fontFamily: 'Inter, sans-serif',
-                                  fontSize: '0.7rem',
-                                  color: 'rgba(246,65,36,0.6)',
-                                  fontWeight: 500,
+                                  fontSize: '0.75rem',
+                                  color: '#F64124',
+                                  fontWeight: 600,
                                 }}
                               >
                                 View Details →

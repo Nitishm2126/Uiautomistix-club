@@ -303,17 +303,18 @@ function CTAButton({ label, href, variant = 'primary', icon: Icon }) {
       <a
         href={href}
         onClick={handleClick}
-        className="group inline-flex items-center gap-2 font-semibold rounded-full focus-ring"
+        className="group inline-flex items-center justify-center gap-2 font-semibold rounded-full focus-ring cursor-pointer"
         style={{
-          padding: '0.8rem 2rem',
+          padding: 'clamp(0.72rem, 1.8vw, 0.8rem) clamp(1.4rem, 3vw, 2rem)',
           background: '#F64124',
           color: '#FFFFFF',
           fontFamily: 'Inter, sans-serif',
-          fontSize: '0.925rem',
+          fontSize: 'clamp(0.875rem, 1.5vw, 0.925rem)',
           letterSpacing: '0.01em',
           textDecoration: 'none',
           transition: 'background 250ms ease, box-shadow 250ms ease, transform 150ms ease',
           boxShadow: '0 4px 20px rgba(246,65,36,0.35)',
+          whiteSpace: 'nowrap',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.background = '#d43010'
@@ -326,7 +327,7 @@ function CTAButton({ label, href, variant = 'primary', icon: Icon }) {
           e.currentTarget.style.transform = 'translateY(0)'
         }}
       >
-        {label}
+        <span>{label}</span>
         {Icon && (
           <Icon
             size={16}
@@ -343,17 +344,18 @@ function CTAButton({ label, href, variant = 'primary', icon: Icon }) {
     <a
       href={href}
       onClick={handleClick}
-      className="group inline-flex items-center gap-2 font-semibold rounded-full focus-ring"
+      className="group inline-flex items-center justify-center gap-2 font-semibold rounded-full focus-ring cursor-pointer"
       style={{
-        padding: '0.8rem 2rem',
+        padding: 'clamp(0.72rem, 1.8vw, 0.8rem) clamp(1.4rem, 3vw, 2rem)',
         background: 'transparent',
         color: '#FFFFFF',
         fontFamily: 'Inter, sans-serif',
-        fontSize: '0.925rem',
+        fontSize: 'clamp(0.875rem, 1.5vw, 0.925rem)',
         letterSpacing: '0.01em',
         border: '1.5px solid rgba(255,255,255,0.25)',
         textDecoration: 'none',
         transition: 'border-color 250ms ease, background 250ms ease, transform 150ms ease',
+        whiteSpace: 'nowrap',
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.borderColor = '#F64124'
@@ -367,7 +369,7 @@ function CTAButton({ label, href, variant = 'primary', icon: Icon }) {
       }}
     >
       {Icon && <Icon size={16} strokeWidth={2.2} />}
-      {label}
+      <span>{label}</span>
     </a>
   )
 }
@@ -380,14 +382,15 @@ function CTAButton({ label, href, variant = 'primary', icon: Icon }) {
 function FeatureChip({ label }) {
   return (
     <div
-      className="inline-flex items-center gap-2 rounded-full select-none transition-colors duration-200"
+      className="inline-flex items-center gap-2 rounded-full select-none transition-all duration-200"
       style={{
-        padding: '0.45rem 0.95rem',
+        padding: 'clamp(0.36rem, 1vw, 0.45rem) clamp(0.75rem, 2vw, 0.95rem)',
         background: 'rgba(255, 255, 255, 0.03)',
         border: '1px solid rgba(255, 255, 255, 0.08)',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.25)',
         boxSizing: 'border-box',
         cursor: 'default',
+        maxWidth: '100%',
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.background = 'rgba(246, 65, 36, 0.06)'
@@ -413,7 +416,7 @@ function FeatureChip({ label }) {
       <span
         style={{
           fontFamily: 'Inter, sans-serif',
-          fontSize: '0.8rem',
+          fontSize: 'clamp(0.74rem, 1.6vw, 0.8rem)',
           fontWeight: 500,
           color: 'rgba(255, 255, 255, 0.75)',
           letterSpacing: '0.02em',
@@ -498,7 +501,7 @@ export default function Hero() {
         className="relative z-10 w-full mx-auto"
         style={{
           maxWidth: '1280px',
-          padding: '0 1.5rem',
+          padding: '0 clamp(1rem, 4vw, 1.5rem)',
           paddingTop: 'clamp(90px, 12vh, 120px)', /* clear fixed navbar */
           paddingBottom: 'clamp(3rem, 6vh, 4.5rem)',
         }}
@@ -627,7 +630,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6, ease: EASE_OUT }}
-              className="flex flex-wrap items-center gap-3.5 justify-start mb-8"
+              className="flex flex-wrap items-center gap-3 sm:gap-3.5 justify-start mb-6 sm:mb-8 w-full"
             >
               <CTAButton
                 label="Explore Events"
@@ -643,10 +646,10 @@ export default function Hero() {
               />
             </motion.div>
 
-            {/* Feature tags — refined professional UI chips */}
+            {/* Feature tags — refined professional UI chips placed neatly below Join Us */}
             <motion.div
               {...fadeIn(0.75)}
-              className="flex flex-wrap items-center gap-2.5 sm:gap-3 w-full justify-start"
+              className="flex flex-wrap items-center gap-2 sm:gap-2.5 w-full justify-start"
             >
               <FeatureChip label="Student-led Club" />
               <FeatureChip label="Automation & RPA" />

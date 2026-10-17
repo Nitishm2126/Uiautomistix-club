@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion'
-import { Eye, Target, CheckCircle2, Bot, Layers, Zap } from 'lucide-react'
+import { useState, useCallback, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Eye, Target, CheckCircle2, Bot, Layers, Zap, Trophy, Award, Maximize2, ExternalLink, X } from 'lucide-react'
 
 /* ============================================================
    ANIMATION VARIANTS
@@ -87,6 +88,23 @@ const listItemTextStyle = {
    ABOUT SECTION COMPONENT
    ============================================================ */
 export default function AboutSection() {
+  const [isPosterModalOpen, setIsPosterModalOpen] = useState(false)
+
+  // Escape key listener for poster modal
+  const handleKeyDown = useCallback((e) => {
+    if (e.key === 'Escape') setIsPosterModalOpen(false)
+  }, [])
+
+  useEffect(() => {
+    if (!isPosterModalOpen) return
+    document.addEventListener('keydown', handleKeyDown)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = ''
+    }
+  }, [isPosterModalOpen, handleKeyDown])
+
   return (
     <section
       id="about"
@@ -371,8 +389,441 @@ export default function AboutSection() {
             </motion.div>
 
           </div>
+
+          {/* ── 5TH CONSECUTIVE YEAR ON THE GLOBAL STAGE (HIGHLIGHTED FEATURE) ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.7, ease: EASE }}
+            className="w-full relative overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, rgba(246,65,36,0.06) 0%, rgba(255,255,255,0.02) 50%, rgba(246,65,36,0.03) 100%)',
+              border: '1px solid rgba(246,65,36,0.25)',
+              borderRadius: '1.5rem',
+              padding: 'clamp(2rem, 5vw, 3.25rem)',
+              boxShadow: '0 12px 50px rgba(0,0,0,0.35), 0 0 40px rgba(246,65,36,0.06)',
+            }}
+          >
+            {/* Top glowing accent bar */}
+            <div
+              className="absolute top-0 left-0 w-full h-1"
+              style={{ background: 'linear-gradient(90deg, #F64124, rgba(246,65,36,0.25), #F64124)' }}
+            />
+
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
+              {/* Left Content Column */}
+              <div className="flex-1 flex flex-col items-start">
+                {/* Badge */}
+                <div
+                  className="inline-flex items-center gap-2"
+                  style={{
+                    padding: '0.4rem 0.9rem',
+                    borderRadius: '9999px',
+                    background: 'rgba(246,65,36,0.12)',
+                    border: '1px solid rgba(246,65,36,0.3)',
+                    marginBottom: '1.25rem',
+                  }}
+                >
+                  <Trophy size={15} color="#F64124" strokeWidth={2.2} />
+                  <span
+                    style={{
+                      fontFamily: 'Space Grotesk, Inter, sans-serif',
+                      fontSize: '0.8rem',
+                      fontWeight: 700,
+                      color: '#F64124',
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    Global Recognition • UiPath Community
+                  </span>
+                </div>
+
+                {/* Heading */}
+                <h3
+                  style={{
+                    fontFamily: 'Space Grotesk, Inter, sans-serif',
+                    fontSize: 'clamp(1.6rem, 3.5vw, 2.35rem)',
+                    fontWeight: 700,
+                    color: '#FFFFFF',
+                    lineHeight: 1.25,
+                    letterSpacing: '-0.02em',
+                    marginBottom: '1rem',
+                  }}
+                >
+                  5th Consecutive Year on the Global Stage!
+                </h3>
+
+                {/* Content description */}
+                <p
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: 'clamp(0.95rem, 1.8vw, 1.1rem)',
+                    lineHeight: 1.8,
+                    color: 'rgba(255,255,255,0.85)',
+                    marginBottom: '1.75rem',
+                  }}
+                >
+                  Our <strong style={{ color: '#FFFFFF', fontWeight: 600 }}>Student Developer Champions</strong> continue to shine on the global stage through the <strong style={{ color: '#FFFFFF', fontWeight: 600 }}>UiPath Community</strong>, showcasing excellence in automation, innovation, and technology for the <strong style={{ color: '#F64124', fontWeight: 600 }}>fifth consecutive year</strong>.
+                </p>
+
+                {/* Student Developer Champions Entries */}
+                <div className="w-full">
+                  <span
+                    style={{
+                      fontFamily: 'Inter, sans-serif',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                      color: 'rgba(255,255,255,0.4)',
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                      display: 'block',
+                      marginBottom: '0.75rem',
+                    }}
+                  >
+                    Student Developer Champions (2022 – 2027)
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5 w-full">
+                    {[
+                      { name: "Shanthini .D", year: "2022-2023" },
+                      { name: "Hemanth .M", year: "2023-2024" },
+                      { name: "Aishvarya .R", year: "2024-2025" },
+                      { name: "Balamurugan .S", year: "2025-2026" },
+                      { name: "Prithyanka SJ", year: "2026-2027", current: true },
+                    ].map((champ, idx) => (
+                      <div
+                        key={idx}
+                        className={`flex items-center justify-between gap-2 px-3.5 py-2.5 rounded-xl transition-all duration-200 ${
+                          champ.current ? 'sm:col-span-2' : ''
+                        }`}
+                        style={{
+                          background: champ.current ? 'rgba(246,65,36,0.12)' : 'rgba(255,255,255,0.025)',
+                          border: champ.current ? '1px solid rgba(246,65,36,0.4)' : '1px solid rgba(255,255,255,0.08)',
+                        }}
+                      >
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          <Award size={14} color={champ.current ? '#F64124' : 'rgba(255,255,255,0.5)'} className="flex-shrink-0" />
+                          <span
+                            style={{
+                              fontFamily: 'Inter, sans-serif',
+                              fontSize: '0.84rem',
+                              color: '#FFFFFF',
+                              fontWeight: 600,
+                              whiteSpace: 'nowrap',
+                            }}
+                          >
+                            {champ.name}
+                          </span>
+                        </div>
+                        <span
+                          style={{
+                            fontFamily: 'Inter, sans-serif',
+                            fontSize: '0.75rem',
+                            color: champ.current ? '#F64124' : 'rgba(255,255,255,0.45)',
+                            fontWeight: 500,
+                            whiteSpace: 'nowrap',
+                            flexShrink: 0,
+                          }}
+                        >
+                          ({champ.year})
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Poster Column */}
+              <div className="w-full lg:w-[380px] flex-shrink-0 flex justify-center mt-4 lg:mt-0">
+                <div
+                  onClick={() => setIsPosterModalOpen(true)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Click to enlarge 5th Year Global Stage Poster"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setIsPosterModalOpen(true)
+                    }
+                  }}
+                  className="relative rounded-2xl overflow-hidden cursor-pointer group/poster transition-all duration-300 w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[380px] mx-auto focus-ring"
+                  style={{
+                    border: '1px solid rgba(246,65,36,0.3)',
+                    boxShadow: '0 16px 40px rgba(0,0,0,0.5), 0 0 30px rgba(246,65,36,0.12)',
+                    background: '#0D0D0D',
+                  }}
+                >
+                  <img
+                    src="/assets/events/global-stage-champions.jpg"
+                    alt="Student Developer Champions - 5th Consecutive Year on the Global Stage"
+                    style={{
+                      width: '100%',
+                      maxHeight: '440px',
+                      display: 'block',
+                      objectFit: 'contain',
+                      margin: '0 auto',
+                    }}
+                    className="transition-transform duration-500 group-hover/poster:scale-[1.02]"
+                  />
+                  <div
+                    className="absolute inset-0 bg-black/40 opacity-0 group-hover/poster:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2"
+                    style={{ backdropFilter: 'blur(2px)' }}
+                  >
+                    <span
+                      className="px-4 py-2 rounded-lg text-white text-xs font-semibold flex items-center gap-2"
+                      style={{ background: 'rgba(246,65,36,0.9)', fontFamily: 'Space Grotesk, sans-serif' }}
+                    >
+                      <Maximize2 size={14} /> Click to Enlarge Poster
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
+
+      {/* ── Poster Lightbox Modal ── */}
+      <AnimatePresence>
+        {isPosterModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center"
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 9999,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 'clamp(0.75rem, 3vw, 1.5rem)',
+              background: 'rgba(0, 0, 0, 0.88)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              boxSizing: 'border-box',
+            }}
+            onClick={() => setIsPosterModalOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 16 }}
+              transition={{ duration: 0.3, ease: EASE }}
+              className="relative w-full flex flex-col overflow-hidden"
+              style={{
+                width: '100%',
+                maxWidth: '520px',
+                maxHeight: 'min(88vh, 720px)',
+                background: '#121212',
+                border: '1px solid rgba(246,65,36,0.3)',
+                borderRadius: '1.25rem',
+                boxShadow: '0 25px 60px -15px rgba(0,0,0,0.85), 0 0 50px rgba(246,65,36,0.12)',
+                boxSizing: 'border-box',
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden',
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Top Header Bar — Single cleanly aligned row */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '0.5rem',
+                  padding: '0.75rem clamp(0.85rem, 2.5vw, 1.25rem)',
+                  background: 'rgba(18,18,18,0.98)',
+                  borderBottom: '1px solid rgba(255,255,255,0.08)',
+                  flexShrink: 0,
+                  boxSizing: 'border-box',
+                }}
+              >
+                <div 
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    minWidth: 0,
+                    flex: 1,
+                  }}
+                >
+                  <Trophy size={16} color="#F64124" style={{ flexShrink: 0 }} />
+                  <span
+                    style={{
+                      fontFamily: 'Space Grotesk, sans-serif',
+                      fontSize: 'clamp(0.78rem, 2vw, 0.875rem)',
+                      fontWeight: 700,
+                      color: '#FFFFFF',
+                      letterSpacing: '0.02em',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    UiPath Global Stage Poster
+                  </span>
+                </div>
+
+                <div 
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    flexShrink: 0,
+                  }}
+                >
+                  <a
+                    href="/assets/events/global-stage-champions.jpg"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Open full resolution poster in new browser tab"
+                    style={{
+                      height: '32px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.35rem',
+                      padding: '0 0.65rem',
+                      borderRadius: '0.5rem',
+                      background: 'rgba(246,65,36,0.12)',
+                      color: '#F64124',
+                      border: '1px solid rgba(246,65,36,0.25)',
+                      fontFamily: 'Inter, sans-serif',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                      textDecoration: 'none',
+                      boxSizing: 'border-box',
+                      transition: 'background 200ms ease',
+                      whiteSpace: 'nowrap',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(246,65,36,0.22)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'rgba(246,65,36,0.12)'
+                    }}
+                  >
+                    <ExternalLink size={13} strokeWidth={2.2} />
+                    <span>Full Size</span>
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={() => setIsPosterModalOpen(false)}
+                    aria-label="Close poster modal"
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: '0.5rem',
+                      background: 'rgba(255,255,255,0.06)',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      color: '#FFFFFF',
+                      cursor: 'pointer',
+                      boxSizing: 'border-box',
+                      transition: 'background 200ms ease, border-color 200ms ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(246,65,36,0.25)'
+                      e.currentTarget.style.borderColor = 'rgba(246,65,36,0.5)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
+                    }}
+                  >
+                    <X size={16} strokeWidth={2.5} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Scrollable Body with Consistent Unified Padding on All Sides */}
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  flex: 1,
+                  overflowY: 'auto',
+                  overscrollBehavior: 'contain',
+                  padding: 'clamp(0.85rem, 2.5vw, 1.25rem)',
+                  paddingBottom: 'clamp(1.1rem, 3vw, 1.5rem)',
+                  gap: '0.85rem',
+                  boxSizing: 'border-box',
+                }}
+              >
+                {/* Modal Poster Image — perfectly centered with preserved aspect ratio */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    minHeight: 0,
+                    flexShrink: 0,
+                  }}
+                >
+                  <img
+                    src="/assets/events/global-stage-champions.jpg"
+                    alt="Student Developer Champions - 5th Consecutive Year on the Global Stage"
+                    style={{
+                      maxHeight: 'clamp(160px, 30vh, 290px)',
+                      width: 'auto',
+                      maxWidth: '100%',
+                      display: 'block',
+                      objectFit: 'contain',
+                      borderRadius: '0.625rem',
+                      boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
+                      margin: '0 auto',
+                    }}
+                  />
+                </div>
+
+                {/* Modal Description — neat left-aligned text with identical padding and spacing */}
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flexShrink: 0,
+                    textAlign: 'left',
+                    width: '100%',
+                  }}
+                >
+                  <h4
+                    style={{
+                      fontFamily: 'Space Grotesk, sans-serif',
+                      fontSize: 'clamp(0.95rem, 2.4vw, 1.125rem)',
+                      fontWeight: 700,
+                      color: '#FFFFFF',
+                      marginBottom: '0.4rem',
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    5th Consecutive Year on the Global Stage!
+                  </h4>
+                  <p
+                    style={{
+                      fontFamily: 'Inter, sans-serif',
+                      fontSize: 'clamp(0.8rem, 1.8vw, 0.85rem)',
+                      lineHeight: 1.6,
+                      color: 'rgba(255,255,255,0.72)',
+                      margin: 0,
+                    }}
+                  >
+                    Our Student Developer Champions continue to shine on the global stage through the UiPath Community, showcasing excellence in automation, innovation, and technology for the fifth consecutive year.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

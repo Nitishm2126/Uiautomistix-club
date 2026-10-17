@@ -29,11 +29,19 @@ if (!supabaseUrl || !supabaseAnonKey) {
   )
 }
 
+const isValidUrl = (url) => {
+  try {
+    return Boolean(new URL(url))
+  } catch {
+    return false
+  }
+}
+
+const safeUrl = (supabaseUrl && isValidUrl(supabaseUrl)) ? supabaseUrl : 'https://placeholder.supabase.co'
+const safeKey = supabaseAnonKey || 'placeholder-anon-key'
+
 /**
  * Single shared Supabase client instance.
  * Uses the public anon key — Row Level Security controls all data access.
  */
-export const supabase = createClient(
-  supabaseUrl ?? '',
-  supabaseAnonKey ?? ''
-)
+export const supabase = createClient(safeUrl, safeKey)

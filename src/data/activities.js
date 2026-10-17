@@ -29,6 +29,14 @@ export const activities = [
   },
   {
     year: 2026,
-    title: "SAIRAM AUTOMATA \u2013 FUTURE IN AUTOMATION"
+    title: "SAIRAM AUTOMATA – FUTURE IN AUTOMATION"
+  },
+  {
+    year: 2026,
+    title: "CLUB INAUGURATION & LAUNCHPAD"
+  },
+  {
+    year: 2026,
+    title: "CTRL + AI 1.0 — UNLEASH YOUR AGENTS"
   }
 ];

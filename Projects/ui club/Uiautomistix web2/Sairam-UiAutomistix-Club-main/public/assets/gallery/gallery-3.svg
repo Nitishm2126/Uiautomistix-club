@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
-  <rect width="100%" height="100%" fill="#111111"/>
-  <rect width="90%" height="90%" x="5%" y="5%" fill="none" stroke="#F64124" stroke-width="2" stroke-dasharray="6 6" opacity="0.2"/>
-  <circle cx="250" cy="200" r="45" fill="rgba(246,65,36,0.1)" stroke="#F64124" stroke-width="1.5" opacity="0.6"/>
-  <text x="250" y="205" dominant-baseline="middle" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="28" font-weight="bold" fill="#F64124">03</text>
-  <text x="250" y="280" dominant-baseline="middle" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">Club Executive Team</text>
-  <text x="250" y="315" dominant-baseline="middle" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#FFFFFF" opacity="0.5">Category: Team (Square 1:1)</text>
-  <text x="250" y="420" dominant-baseline="middle" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#FFFFFF" opacity="0.25">TEMPORARY DEVELOPMENT ASSET</text>
-</svg>
